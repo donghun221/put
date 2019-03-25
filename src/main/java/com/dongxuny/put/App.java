@@ -32,32 +32,34 @@ public class App {
         String secretId = "";
         String secretKey = "";
         String bucketName = "";
+        String region = "";
         
-        if (args.length < 4) {
+        if (args.length < 5) {
             logger.error("Not enough args!");
-            logger.error("Need <put count> <secretId> <secretKey> <bucket> as orders");
+            logger.error("Need <put count> <secretId> <secretKey> <region> <bucket> as orders");
             logger.error("Example:");
-            logger.error("java -jar put-jar-with-dependencies.jar 10 XXX XXX my-bucket");
+            logger.error("java -jar put-jar-with-dependencies.jar 10 XXX XXX ap-shanghai my-bucket");
             return;
         }
         
         loop = Integer.parseInt(args[0]);
         secretId = args[1];
         secretKey = args[2];
-        bucketName = args[3];
+        region = args[3];
+        bucketName = args[4];
         
         logger.info("Start PUT Operation...");
         
-        put(loop, secretId, secretKey, bucketName);
+        put(loop, secretId, secretKey, region, bucketName);
     }
     
-    private static void put(int loop, String secretId, String secretKey, String bucketName) throws Exception {
+    private static void put(int loop, String secretId, String secretKey, String region, String bucketName) throws Exception {
         logger.info("Init COS Client...");
         
         // 1 初始化用户身份信息(secretId, secretKey)
         COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
         // 2 设置bucket的区域, COS地域的简称请参照 https://www.qcloud.com/document/product/436/6224
-        ClientConfig clientConfig = new ClientConfig(new Region("ap-shanghai"));
+        ClientConfig clientConfig = new ClientConfig(new Region(region));
         // 3 生成cos客户端
         COSClient cosclient = new COSClient(cred, clientConfig);
         
