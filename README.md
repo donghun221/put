@@ -5,4 +5,6 @@ git clone
 mvn clean
 mvn package
 java -jar java -jar put-jar-with-dependencies.jar <循环次数> <Secret Id> <Secret Key> <Region> <Bucket名字>
+  
+java -jar put-jar-with-dependencies.jar 10 XXXX XXXX ap-shanghai dongxuny-sh-125600000
 
